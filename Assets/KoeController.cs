@@ -2,6 +2,7 @@ using UnityEngine;
 using Whisper;
 using Whisper.Utils;
 using TMPro;
+using System.Linq;
 
 public class KoeController : MonoBehaviour
 {
@@ -63,31 +64,73 @@ public class KoeController : MonoBehaviour
         }
     }
 
-void SpawnWord(string text)
-{
-    Vector3 spawnPos = shootPoint.position + (shootPoint.forward * 2.0f);
-    GameObject go = Instantiate(wordPrefab, spawnPos, shootPoint.rotation);
-    
-    var tmp = go.GetComponentInChildren<TextMeshPro>();
-    if (tmp != null) 
+    // テキストから攻撃性を判定するメソッド
+    private WordPower AnalyzeAggression(string text)
     {
-        // ここを書き換えます。text（認識した言葉）をそのまま表示します。
-        tmp.text = text; 
-        tmp.fontSize = 10;
-        
-        // 暴言なら赤、それ以外は白にする演出は残しておくとスペキュラティブです
-        if (text.Contains("しね") || text.Contains("バカ")) {
-            tmp.color = Color.red;
-        } else {
-            tmp.color = Color.white;
-        }
+        string[] aggressiveWords = { "しね", "ころす", "消えろ", "最悪", "うざい", "バカ" };
+        string[] gentleWords = { "ありがとう", "すき", "おつかれ", "愛してる", "平和", "優しい" };
+
+        if (aggressiveWords.Any(word => text.Contains(word))) return WordPower.Aggressive;
+        if (gentleWords.Any(word => text.Contains(word))) return WordPower.Gentle;
+        return WordPower.Normal;
     }
 
-    var rb = go.GetComponent<Rigidbody>();
-    if (rb != null)
+// void SpawnWord(string text)
+// {
+//     Vector3 spawnPos = shootPoint.position + (shootPoint.forward * 2.0f);
+//     GameObject go = Instantiate(wordPrefab, spawnPos, shootPoint.rotation);
+    
+//     var tmp = go.GetComponentInChildren<TextMeshPro>();
+//     if (tmp != null) 
+//     {
+//         // ここを書き換えます。text（認識した言葉）をそのまま表示します。
+//         tmp.text = text; 
+//         tmp.fontSize = 10;
+        
+//         // 暴言なら赤、それ以外は白にする演出は残しておくとスペキュラティブです
+//         if (text.Contains("しね") || text.Contains("バカ")) {
+//             tmp.color = Color.red;
+//         } else {
+//             tmp.color = Color.white;
+//         }
+//     }
+
+//     var rb = go.GetComponent<Rigidbody>();
+//     if (rb != null)
+//     {
+//         // 呪いの力（飛ばす力）をここでお好みの強さに調整してください
+//         rb.AddForce(shootPoint.forward * 25f, ForceMode.Impulse);
+//     }
+// }
+// }
+
+void SpawnWord(string text)
     {
-        // 呪いの力（飛ばす力）をここでお好みの強さに調整してください
-        rb.AddForce(shootPoint.forward * 25f, ForceMode.Impulse);
+        Vector3 spawnPos = shootPoint.position + (shootPoint.forward * 2.0f);
+        GameObject go = Instantiate(wordPrefab, spawnPos, shootPoint.rotation);
+        
+        var tmp = go.GetComponentInChildren<TextMeshPro>();
+        if (tmp != null) 
+        {
+            tmp.text = text; 
+            tmp.fontSize = 10;
+        }
+
+        // WordProjectileスクリプトを取得して強さをセットする
+        var projectileScript = go.GetComponent<WordProjectile>();
+        if (projectileScript == null) 
+        {
+            projectileScript = go.AddComponent<WordProjectile>();
+        }
+
+        // 言葉の強さを判定してセット（色やサイズの変更はWordProjectile側で行われます）
+        WordPower power = AnalyzeAggression(text);
+        projectileScript.SetPower(power);
+
+        var rb = go.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(shootPoint.forward * 25f, ForceMode.Impulse);
+        }
     }
-}
 }
