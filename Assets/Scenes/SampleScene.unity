@@ -515,7 +515,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myExplosion: {fileID: 6573977362361720285, guid: fa2ccc25e1d23410cb346995d5886bf6, type: 3}
-  explosionSound: {fileID: 0}
 --- !u!54 &544947954
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -592,7 +591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185933ef42f43adabb3c7a445b494c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffectPrefab: {fileID: 7731646545874216928, guid: 980f106d3e22e49cca25929f1cec7f46, type: 3}
 --- !u!65 &551775884
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -722,7 +720,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myExplosion: {fileID: 7731646545874216928, guid: 980f106d3e22e49cca25929f1cec7f46, type: 3}
-  explosionSound: {fileID: 0}
 --- !u!1 &676696679
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +823,7 @@ Transform:
   m_GameObject: {fileID: 676696679}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1025,6 +1022,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1233542022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1233542023}
+  m_Layer: 0
+  m_Name: HeartFragments
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1233542023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233542022}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5429163, y: -1.0742183, z: 0.33406115}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1469755973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1111,7 +1139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185933ef42f43adabb3c7a445b494c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffectPrefab: {fileID: 7731646545874216928, guid: 980f106d3e22e49cca25929f1cec7f46, type: 3}
 --- !u!54 &1469755976
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1135,7 +1162,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
@@ -1173,8 +1200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62160ab8b53994f2db6b256ec3d51a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myExplosion: {fileID: 7731646545874216928, guid: 980f106d3e22e49cca25929f1cec7f46, type: 3}
-  explosionSound: {fileID: 0}
+  myExplosion: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
 --- !u!1 &1947059753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,3 +1350,4 @@ SceneRoots:
   - {fileID: 551775887}
   - {fileID: 809982781}
   - {fileID: 676696683}
+  - {fileID: 1233542023}
