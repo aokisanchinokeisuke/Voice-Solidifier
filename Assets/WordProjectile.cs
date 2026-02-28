@@ -1,14 +1,6 @@
 using UnityEngine;
 using TMPro;
 
-// 言葉の強さを定義する型
-public enum WordPower
-{
-    Gentle,   // 優しい
-    Normal,   // 普通
-    Aggressive // 攻撃的
-}
-
 public class WordProjectile : MonoBehaviour
 {
     public WordPower myPower;
@@ -19,27 +11,40 @@ public class WordProjectile : MonoBehaviour
         textMesh = GetComponent<TextMeshPro>();
     }
 
-    // 生成時にKoeControllerから呼ばれる設定用メソッド
+    // 性質を設定するメソッド
     public void SetPower(WordPower power)
     {
         myPower = power;
-
         if (textMesh == null) textMesh = GetComponent<TextMeshPro>();
 
-        // 強さに応じて見た目をフィードバックする
         switch (power)
         {
             case WordPower.Aggressive:
-                textMesh.color = Color.red; // 攻撃的な言葉は赤
-                transform.localScale *= 1.8f; // サイズを大きくして威圧感を出す
+                textMesh.color = Color.red;
+                transform.localScale *= 1.8f;
                 break;
             case WordPower.Gentle:
-                textMesh.color = Color.cyan; // 優しい言葉は水色
-                transform.localScale *= 0.7f; // サイズを小さくして柔らかさを出す
+                textMesh.color = Color.cyan;
+                transform.localScale *= 0.7f;
                 break;
             case WordPower.Normal:
-                textMesh.color = Color.white; // 通常は白
+                textMesh.color = Color.white;
                 break;
+        }
+    }
+
+    // 衝突した時の処理
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 衝突が起きているか確認するためのログ
+        Debug.Log("衝突しました: " + collision.gameObject.name);
+
+        var heart = collision.gameObject.GetComponent<DestructibleHeart>();
+        
+        if (heart != null)
+        {
+            heart.TriggerExplosion(myPower);
+            Destroy(gameObject);
         }
     }
 }
